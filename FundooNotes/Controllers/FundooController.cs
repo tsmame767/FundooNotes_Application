@@ -1,14 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ModelLayer.DTO;
 using RepositoryLayer.Interface;
+using BusinessLayer.Interface;
 
 namespace FundooNotes.Controllers
 {
     public class FundooController : ControllerBase
     {
-        private readonly IStudentRL service;
+        private readonly IStudentBL service;
 
-        public FundooController(IStudentRL _service) 
+        public FundooController(IStudentBL _service) 
         {
             this.service = _service;
         }
@@ -40,6 +42,14 @@ namespace FundooNotes.Controllers
             {
                 return NotFound();
             }
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var users= service.GetAll();
+            return Ok(users);
         }
 
     }

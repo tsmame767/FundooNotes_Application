@@ -71,3 +71,5 @@ D:\c#\API\FundooNotes\obj\Debug\net8.0\FundooNotes.pdb
 D:\c#\API\FundooNotes\obj\Debug\net8.0\FundooNotes.genruntimeconfig.cache
 D:\c#\API\FundooNotes\obj\Debug\net8.0\ref\FundooNotes.dll
 D:\c#\API\FundooNotes\obj\Debug\net8.0\FundooNotes.MvcApplicationPartsAssemblyInfo.cs
+D:\c#\API\FundooNotes\bin\Debug\net8.0\BCrypt.Net-Next.dll
+D:\c#\API\FundooNotes\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

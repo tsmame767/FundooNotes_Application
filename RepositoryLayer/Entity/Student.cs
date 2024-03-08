@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace RepositoryLayer.Entity
 {
@@ -13,7 +14,11 @@ namespace RepositoryLayer.Entity
         public string First_Name { get; set; }
         public string Last_Name { get; set; }
         public string Email { get; set; }
-        public string Password { get; set; }
+
+        [JsonIgnore]
+        public string Password { get; set; } //salt password
+        //public string HashPassword { get; set; } //hash password
+
 
 
 

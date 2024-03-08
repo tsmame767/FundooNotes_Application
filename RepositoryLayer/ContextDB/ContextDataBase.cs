@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Data;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using RepositoryLayer.Entity;
 
 namespace RepositoryLayer.ContextDB
 {

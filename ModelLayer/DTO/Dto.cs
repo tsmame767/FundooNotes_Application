@@ -12,5 +12,7 @@ namespace ModelLayer.DTO
         public string Last_Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        //public string HashPassword { get; set; }
+
     }
 }
