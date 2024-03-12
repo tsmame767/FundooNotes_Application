@@ -86,6 +86,46 @@ namespace FundooNotes.Controllers
             return response;
         }
 
+        [HttpDelete]
+        public NoteResponse Delete(int NoteId)
+        {
+            NoteResponse response=new NoteResponse();
+            var res = this.NoteService.DeleteNote(NoteId);
+            if (Convert.ToInt32(res) > 0)
+            {
+                response.Status = 204;
+                response.Message = "Note Deleted Successfully";
+                response.IsSuccess = true;
+
+            }
+
+            else
+            {
+                response.Status = 404;
+                response.Message = "Note Not Deleted";
+                response.IsSuccess = false;
+
+            }
+            return response;
+
+        }
+
+        /
+        public NoteResponse isArchived(int NoteId)
+        {
+            NoteResponse response=new NoteResponse();
+            var res = this.NoteService.isArchived(NoteId);
+            return response;
+        }
+
+        //public NoteResponse isDeleted(int NoteId)
+        //{
+        //    NoteResponse response = new NoteResponse();
+        //    var res = this.NoteService.isDeleted(NoteId);
+        //    return response;
+        //}
+
+
     }
 
 

@@ -77,6 +77,7 @@ namespace RepositoryLayer.Service
             parameters1.Add("colour", Request.Colour, DbType.String);
             using (var connect = this.context.CreateConnection())
             {
+                //Data Update Suite
                 var res1 = connect.Query<UpdateNoteRequest>(query1, new { UserId = UserId, noteid = NoteId });
                 var RetResults = res1.SingleOrDefault();
                 if (RetResults == null)
@@ -91,8 +92,26 @@ namespace RepositoryLayer.Service
                 return res2;
             }
 
+        }
+        public int DeleteNote(int NoteId)
+        {
+            var res = -1;
+            var query = "Delete from Notes where noteid=@NoteId";
 
+            using (var connect = this.context.CreateConnection())
+            {
+                res=connect.Execute(query, new { noteid = NoteId });
+                if (res <= 0)
+                {
+                    return res;
+                }
+            }
+            return res;
+        }
 
+        public bool isArchived(int NoteId)
+        {
+            return false;
         }
     }
 }

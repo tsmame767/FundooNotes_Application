@@ -16,5 +16,9 @@ namespace BusinessLayer.Interface
 
         public int UpdateNote(UpdateNoteRequest Request, int UserId,int NoteId);
 
+        public int DeleteNote(int NoteId);
+
+        public bool isArchived(int NoteId);
+
     }
 }

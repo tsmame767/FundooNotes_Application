@@ -16,5 +16,9 @@ namespace RepositoryLayer.Interface
         public int CreateNote(CreateNoteRequest Request, int UserId);
 
         public int UpdateNote(UpdateNoteRequest Request, int UserId,int NoteId);
+
+        public int DeleteNote(int NoteId);
+
+        public bool isArchived(int NoteId);
     }
 }

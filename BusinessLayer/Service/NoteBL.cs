@@ -33,6 +33,16 @@ namespace BusinessLayer.Service
             return service.UpdateNote(Request,UserId,NoteId);
         }
 
+        public int DeleteNote(int NoteId)
+        {
+            return service.DeleteNote(NoteId);
+        }
+
+        public bool isArchived(int NoteId)
+        {
+            return service.isArchived(NoteId);
+        }
+
 
 
     }
