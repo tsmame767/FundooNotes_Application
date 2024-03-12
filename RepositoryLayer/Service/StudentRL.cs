@@ -16,31 +16,32 @@ using Azure;
 using Microsoft.Identity.Client;
 using Microsoft.AspNetCore.Authentication;
 using System.IdentityModel.Tokens.Jwt;
-using RepositoryLayer.Helpers;
+
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
+using RepositoryLayer.JWT;
+using Microsoft.Extensions.Configuration;
+using System.ComponentModel.DataAnnotations;
 
 namespace RepositoryLayer.Service
 {
     public class StudentRL: IStudentRL
     {
-        // users hardcoded for simplicity, store in a db with hashed passwords in production applications
-        private List<Student> _users = new List<Student>
-        {
-        new Student { Id = 1, First_Name = "Test", Last_Name = "User", Email = "test", Password = "test" }
-        };
-
+        
 
         private readonly ContextDataBase _context;
-        private readonly AppSettings _appSettings;
-        public StudentRL(ContextDataBase context,IOptions<AppSettings> appSettings)
+        private readonly IConfiguration _config;
+    
+        public StudentRL(ContextDataBase context,IConfiguration config)
         {
             this._context = context;
-            this._appSettings=appSettings.Value;
+            this._config = config;
+            
+
 
         }
 
@@ -48,129 +49,133 @@ namespace RepositoryLayer.Service
 
 
 
-        public async Task<string> UserRegistration(Dto _dto)
+        public async Task<UserRegisterResponse> UserRegistration(UserRegisterRequest Users)
         {
-            string response = string.Empty;
-            
-
-            var query = "insert into Student_Details (first_name,last_name,email,[password]) values (@first_name,@last_name,@email,@password)";
-
-            var parameters = new DynamicParameters();
-            parameters.Add("first_name",_dto.First_Name,DbType.String);
-            parameters.Add("last_name", _dto.Last_Name, DbType.String);
-            parameters.Add("email",_dto.Email, DbType.String);
-            parameters.Add("password", _dto.Password, DbType.String);
-
-            // Hash the password
-            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(_dto.Password);
-
-            parameters.Add("Password", hashedPassword, DbType.String); // Use the hashed password
-
-
-            using (var connect = this._context.CreateConnection())
+            UserRegisterResponse response = new UserRegisterResponse();
+            response.IsSuccess = false;
+            response.Message = "no data registered";
+            try
             {
-                await connect.ExecuteAsync(query, parameters);
-                response = "Registration successful";
+
+                var query = "insert into Student_Details (first_name,last_name,email,[password]) values (@first_name,@last_name,@email,@password)";
+
+                var parameters = new DynamicParameters();
+                parameters.Add("first_name", Users.First_Name, DbType.String);
+                parameters.Add("last_name", Users.Last_Name, DbType.String);
+                parameters.Add("email", Users.Email, DbType.String);
+                parameters.Add("password", Users.Password, DbType.String);
+
+                // Hash the password
+                var hashedPassword = BCrypt.Net.BCrypt.HashPassword(Users.Password);
+
+                parameters.Add("Password", hashedPassword, DbType.String); // Use the hashed password
 
 
+                using (var connect = this._context.CreateConnection())
+                {
+                    await connect.ExecuteAsync(query, parameters);
+                    response.IsSuccess = true;
+                    response.Message = "Registeration Succesful";
+                    response.Status = 200;
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = ex.Message;
+                response.Status = 204;
             }
 
             return response;
         }
 
 
-        public async Task<StudentModel> UserLogin(string email, string password)
+        public async Task<UserLoginResponse> UserLogin(UserLoginRequest request)
+        {
+            UserLoginResponse response = new UserLoginResponse();
+            UserLoginResponse UserResp = null;
+            response.IsSuccess = true;
+            response.Message = "Successful";
+            try
+            {
+                //string response = "Login Failed : No Details Matched";
+                var query = "select * from Student_Details where email=@Email";
+                
+                using (var connect = this._context.CreateConnection())
+                {
+
+                    var user = await connect.QueryFirstOrDefaultAsync<Users>(query, new { Email = request.Email });
+                    if (user != null && BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
+                    {
+
+                        
+
+
+                        TokenGenerator token = new TokenGenerator(_config);
+                        response.Message = "Login Successful";
+                        response.data = new UserLoginInformation();
+                        response.data.Id = user.Id;
+                        response.data.Email = user.Email;
+                        response.data.First_Name = user.First_Name;
+                        response.data.Last_Name = user.Last_Name;
+                        response.Token = token.generateJwtToken(response.data.Id, response.data.Email);
+                        // authentication successful so generate jwt token
+                       
+                        //response = "Login Successful";
+                        //UserResp = new UserLoginResponse()
+                        //{
+
+                        //    //id = user.id,
+                        //    //email=user.email,
+                        //    //first_name=user.first_name,
+                        //    //last_name=user.last_name,
+                        //    //token= token.generatejwttoken(user)
+                        //};
+
+                    }
+                    else
+                    {
+                        response.IsSuccess = false;
+                        response.Message = "Login Unsuccesful";
+                        return response;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess=false;
+                response.Message = ex.Message;
+            }
+            finally
+            {
+                //
+            }
+            //return UserResp;
+
+            return response;
+        }
+
+        public async Task<List<Users>> GetAll()
         {
 
-            string response = "Login Failed : No Details Matched";
-            var query = "select * from Student_Details where email=@email";
-            StudentModel student = null;
-            using (var connect = this._context.CreateConnection())
+            var query = "select*from Student_Details";
+            try
             {
-                var user = await connect.QueryFirstOrDefaultAsync<Student>(query, new { Email = email });
-                if (user != null && BCrypt.Net.BCrypt.Verify(password, user.Password))
+                using (var connect = this._context.CreateConnection())
                 {
-                    // authentication successful so generate jwt token
-                    var token = generateJwtToken(user);
-                    response = "Login Successful";
-                    student = new StudentModel()
-                    {
-                        Id = user.Id,
-                        Email=user.Email,
-                        First_Name=user.First_Name,
-                        Last_Name=user.Last_Name,
-                        token= token
-                    };
-
+                    var execute = await connect.QueryAsync<Users>(query);
+                    return execute.ToList();
                 }
             }
-            
-
-            return student;
-
-            //return response;
-        }
-
-        /*
-        public AuthenticateResponse UserLogin(AuthenticateRequest model)
-        {
-            var user = _users.SingleOrDefault(x => x.Email == model.Email && x.Password == model.Password);
-
-            // return null if user not found
-            if (user == null) return null;
-
-            // authentication successful so generate jwt token
-            var token = generateJwtToken(user);
-
-            return new AuthenticateResponse(user, token);
-        }
-        public StudentModel UserLogin(string Email, string Password)
-        {
-            var user = _users.SingleOrDefault(x => x.Email == Email && x.Password == Password);
-
-            // return null if user not found
-            if (user == null) return null;
-
-            // authentication successful so generate jwt token
-            var token = generateJwtToken(user);
-
-            StudentModel student = new StudentModel();
-            student.Email = user.Email;
-            student.First_Name = user.First_Name;   
-            student.Last_Name = user.Last_Name;
-            student.token = token;
-            student.Id = user.Id;
-
-            return student;
-        }*/
-        
-        public IEnumerable<Student> GetAll()
-        {
-            return _users;
-        }
-
-        public Student GetById(int id)
-        {
-            return _users.FirstOrDefault(x => x.Id == id);
-        }
-
-        //helper methods
-
-        private string generateJwtToken(Student user)
-        {
-            //generate token that is valid for 7 days
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
+            catch (Exception ex)
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+                throw new Exception(ex.Message);
+            }
         }
+
 
     }
 }

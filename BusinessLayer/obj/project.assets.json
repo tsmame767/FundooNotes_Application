@@ -2071,11 +2071,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\c#\\API\\BusinessLayer\\BusinessLayer.csproj",
+      "projectUniqueName": "D:\\c#\\API2\\BusinessLayer\\BusinessLayer.csproj",
       "projectName": "BusinessLayer",
-      "projectPath": "D:\\c#\\API\\BusinessLayer\\BusinessLayer.csproj",
+      "projectPath": "D:\\c#\\API2\\BusinessLayer\\BusinessLayer.csproj",
       "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-      "outputPath": "D:\\c#\\API\\BusinessLayer\\obj\\",
+      "outputPath": "D:\\c#\\API2\\BusinessLayer\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -2092,8 +2092,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\c#\\API\\RepositoryLayer\\RepositoryLayer.csproj": {
-              "projectPath": "D:\\c#\\API\\RepositoryLayer\\RepositoryLayer.csproj"
+            "D:\\c#\\API2\\RepositoryLayer\\RepositoryLayer.csproj": {
+              "projectPath": "D:\\c#\\API2\\RepositoryLayer\\RepositoryLayer.csproj"
             }
           }
         }

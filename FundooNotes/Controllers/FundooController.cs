@@ -4,8 +4,16 @@ using ModelLayer.DTO;
 using RepositoryLayer.Interface;
 using BusinessLayer.Interface;
 
+
+
+
+
 namespace FundooNotes.Controllers
 {
+
+    [Route("Api/User")]
+    [ApiController]
+    [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
     public class FundooController : ControllerBase
     {
         private readonly IStudentBL service;
@@ -16,9 +24,10 @@ namespace FundooNotes.Controllers
         }
 
         [HttpPost("UserRegistration")]
-        public async Task<IActionResult> Create([FromBody] Dto student)
+        [AllowAnonymous]
+        public async Task<IActionResult> Create([FromBody] UserRegisterRequest Users)
         {
-            var _list = await this.service.UserRegistration(student);
+            var _list = await this.service.UserRegistration(Users);
             if( _list != null )
             {
                 return Ok( _list );
@@ -29,11 +38,11 @@ namespace FundooNotes.Controllers
             }
         }
 
-        [HttpGet("UserLogin/{Email}/{Password}")]
-
-        public async Task<IActionResult> UserLog(string Email,string Password)
+        [HttpPost("UserLogin")]
+        [AllowAnonymous]
+        public async Task<IActionResult> UserLog(UserLoginRequest request)
         {
-            var _list = await this.service.UserLogin(Email,Password);
+            var _list = await this.service.UserLogin(request);
             if (_list != null)
             {
                 return Ok(_list);
@@ -44,13 +53,22 @@ namespace FundooNotes.Controllers
             }
         }
 
+        [HttpGet("GetAll")]
         [Authorize]
-        [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var users= service.GetAll();
-            return Ok(users);
+            var list = this.service.GetAll();
+            if(list != null )
+            {
+                return Ok( list );
+            }
+            else
+            {
+                return NotFound();
+            }
         }
+
+         
 
     }
 }

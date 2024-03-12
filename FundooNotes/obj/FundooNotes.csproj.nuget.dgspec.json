@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\c#\\API\\FundooNotes\\FundooNotes.csproj": {}
+    "D:\\c#\\API2\\FundooNotes\\FundooNotes.csproj": {}
   },
   "projects": {
-    "D:\\c#\\API\\BusinessLayer\\BusinessLayer.csproj": {
+    "D:\\c#\\API2\\BusinessLayer\\BusinessLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\c#\\API\\BusinessLayer\\BusinessLayer.csproj",
+        "projectUniqueName": "D:\\c#\\API2\\BusinessLayer\\BusinessLayer.csproj",
         "projectName": "BusinessLayer",
-        "projectPath": "D:\\c#\\API\\BusinessLayer\\BusinessLayer.csproj",
+        "projectPath": "D:\\c#\\API2\\BusinessLayer\\BusinessLayer.csproj",
         "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-        "outputPath": "D:\\c#\\API\\BusinessLayer\\obj\\",
+        "outputPath": "D:\\c#\\API2\\BusinessLayer\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,8 +28,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\c#\\API\\RepositoryLayer\\RepositoryLayer.csproj": {
-                "projectPath": "D:\\c#\\API\\RepositoryLayer\\RepositoryLayer.csproj"
+              "D:\\c#\\API2\\RepositoryLayer\\RepositoryLayer.csproj": {
+                "projectPath": "D:\\c#\\API2\\RepositoryLayer\\RepositoryLayer.csproj"
               }
             }
           }
@@ -63,14 +63,14 @@
         }
       }
     },
-    "D:\\c#\\API\\FundooNotes\\FundooNotes.csproj": {
+    "D:\\c#\\API2\\FundooNotes\\FundooNotes.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\c#\\API\\FundooNotes\\FundooNotes.csproj",
+        "projectUniqueName": "D:\\c#\\API2\\FundooNotes\\FundooNotes.csproj",
         "projectName": "FundooNotes",
-        "projectPath": "D:\\c#\\API\\FundooNotes\\FundooNotes.csproj",
+        "projectPath": "D:\\c#\\API2\\FundooNotes\\FundooNotes.csproj",
         "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-        "outputPath": "D:\\c#\\API\\FundooNotes\\obj\\",
+        "outputPath": "D:\\c#\\API2\\FundooNotes\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -87,11 +87,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\c#\\API\\BusinessLayer\\BusinessLayer.csproj": {
-                "projectPath": "D:\\c#\\API\\BusinessLayer\\BusinessLayer.csproj"
+              "D:\\c#\\API2\\BusinessLayer\\BusinessLayer.csproj": {
+                "projectPath": "D:\\c#\\API2\\BusinessLayer\\BusinessLayer.csproj"
               },
-              "D:\\c#\\API\\RepositoryLayer\\RepositoryLayer.csproj": {
-                "projectPath": "D:\\c#\\API\\RepositoryLayer\\RepositoryLayer.csproj"
+              "D:\\c#\\API2\\RepositoryLayer\\RepositoryLayer.csproj": {
+                "projectPath": "D:\\c#\\API2\\RepositoryLayer\\RepositoryLayer.csproj"
               }
             }
           }
@@ -142,14 +142,14 @@
         }
       }
     },
-    "D:\\c#\\API\\ModelLayer\\ModelLayer.csproj": {
+    "D:\\c#\\API2\\ModelLayer\\ModelLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\c#\\API\\ModelLayer\\ModelLayer.csproj",
+        "projectUniqueName": "D:\\c#\\API2\\ModelLayer\\ModelLayer.csproj",
         "projectName": "ModelLayer",
-        "projectPath": "D:\\c#\\API\\ModelLayer\\ModelLayer.csproj",
+        "projectPath": "D:\\c#\\API2\\ModelLayer\\ModelLayer.csproj",
         "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-        "outputPath": "D:\\c#\\API\\ModelLayer\\obj\\",
+        "outputPath": "D:\\c#\\API2\\ModelLayer\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -197,14 +197,14 @@
         }
       }
     },
-    "D:\\c#\\API\\RepositoryLayer\\RepositoryLayer.csproj": {
+    "D:\\c#\\API2\\RepositoryLayer\\RepositoryLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\c#\\API\\RepositoryLayer\\RepositoryLayer.csproj",
+        "projectUniqueName": "D:\\c#\\API2\\RepositoryLayer\\RepositoryLayer.csproj",
         "projectName": "RepositoryLayer",
-        "projectPath": "D:\\c#\\API\\RepositoryLayer\\RepositoryLayer.csproj",
+        "projectPath": "D:\\c#\\API2\\RepositoryLayer\\RepositoryLayer.csproj",
         "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-        "outputPath": "D:\\c#\\API\\RepositoryLayer\\obj\\",
+        "outputPath": "D:\\c#\\API2\\RepositoryLayer\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -221,8 +221,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\c#\\API\\ModelLayer\\ModelLayer.csproj": {
-                "projectPath": "D:\\c#\\API\\ModelLayer\\ModelLayer.csproj"
+              "D:\\c#\\API2\\ModelLayer\\ModelLayer.csproj": {
+                "projectPath": "D:\\c#\\API2\\ModelLayer\\ModelLayer.csproj"
               }
             }
           }

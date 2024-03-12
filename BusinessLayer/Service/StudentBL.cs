@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Service
 {
-    public class StudentBL: IStudentBL
+    public class StudentBL : IStudentBL
     {
         private readonly IStudentRL studentRL;
 
@@ -21,28 +21,22 @@ namespace BusinessLayer.Service
             this.studentRL = studentRL;
         }
 
-        public Task<string> UserRegistration(Dto _dto)
+        public Task<UserRegisterResponse> UserRegistration(UserRegisterRequest Users)
         {
-            return this.studentRL.UserRegistration(_dto);
+            return this.studentRL.UserRegistration(Users);
         }
-        public Task<StudentModel> UserLogin(string Email, string Password)
-        {
-            return this.studentRL.UserLogin(Email,Password);
-        }
-        /*
-        public AuthenticateResponse UserLogin(AuthenticateRequest model)
-        {
-            return this.studentRL.UserLogin(model);
-        }*/
 
-        public IEnumerable<Student> GetAll()
+        
+        public Task<UserLoginResponse> UserLogin(UserLoginRequest request)
+        {
+            return this.studentRL.UserLogin(request);
+        }
+
+        public Task<List<Users>> GetAll()
         {
             return this.studentRL.GetAll();
         }
-        public Student GetById(int id)
-        {
-            return this.GetById(id);
 
-        }
+
     }
 }

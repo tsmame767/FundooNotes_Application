@@ -14,11 +14,11 @@ namespace BusinessLayer.Interface
 
 
     {
-        IEnumerable<Student> GetAll();
-        Student GetById(int id);
-        public Task<string> UserRegistration(Dto _dto);
+        public Task<UserRegisterResponse> UserRegistration(UserRegisterRequest Users);
 
-        public Task<StudentModel> UserLogin(string Email, string Password);
+        public Task<UserLoginResponse> UserLogin(UserLoginRequest request);
+
+        public Task<List<Users>> GetAll();
 
         //public AuthenticateResponse UserLogin(AuthenticateRequest model);
     }

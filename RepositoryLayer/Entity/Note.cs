@@ -18,12 +18,17 @@ namespace RepositoryLayer.Entity
 
         public string Title { get; set; }
         public string Colour { get; set; }
-        public bool IsArchived { get; set; }
-        public bool IsDeleted { get; set; }
-
 
         [ForeignKey("Student_Details")]
         public int UserId { get; set; }
+
+        [JsonIgnore]
+        public bool IsArchived { get; set; } = false;
+        [JsonIgnore]
+        public bool IsDeleted { get; set; } = false;
+
+
+        
 
        // [JsonIgnore]
        // public virtual Student Users { get; set; }

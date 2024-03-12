@@ -14,10 +14,12 @@ namespace RepositoryLayer.Interface
 
         
 
-        IEnumerable<Student> GetAll();
-        Student GetById(int id);
-        public Task<string> UserRegistration(Dto _dto);
-        public Task<StudentModel> UserLogin(string Email, string Password);
+        //IEnumerable<Users> GetAll();
+        //Users GetById(int id);
+        public Task<UserRegisterResponse> UserRegistration(UserRegisterRequest Users);
+        public Task<UserLoginResponse> UserLogin(UserLoginRequest request);
+
+        public Task<List<Users>> GetAll();
         //public AuthenticateResponse UserLogin(AuthenticateRequest model);
     }
 
