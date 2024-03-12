@@ -52,5 +52,47 @@ namespace RepositoryLayer.Service
                 return execute;
             }
         }
+
+        public string CheckInp(string newstr,string oldstr)
+        {
+            if (newstr == "")
+            {
+                return oldstr;
+            }
+            return newstr;
+        }
+        //public UpdateNoteRequest UpdateNote(UpdateNoteRequest Request, int UserId)
+        public int UpdateNote(UpdateNoteRequest Request, int UserId,int NoteId)
+        {
+            var query1 = "select noteid, description,title,colour from Notes where userid=@userid and noteid=@noteid";
+
+            var query2 = "update Notes set description=@description, title=@title, colour=@colour where userid=@userId and noteid=@noteid";
+            String PrevTitle, PrevDescription, PrevColour;
+
+            //Data Retrieval Suite
+            var parameters1 = new DynamicParameters();
+            
+            parameters1.Add("title", Request.Title, DbType.String);
+            parameters1.Add("description", Request.Description, DbType.String);
+            parameters1.Add("colour", Request.Colour, DbType.String);
+            using (var connect = this.context.CreateConnection())
+            {
+                var res1 = connect.Query<UpdateNoteRequest>(query1, new { UserId = UserId, noteid = NoteId });
+                var RetResults = res1.SingleOrDefault();
+                if (RetResults == null)
+                {
+                    return -1;
+                }
+                PrevTitle = RetResults.Title;
+                PrevColour = RetResults.Colour;
+                PrevDescription = RetResults.Description;
+
+                var res2 = connect.Execute(query2, new { title = CheckInp(Request.Title, PrevTitle), description = CheckInp(Request.Description,PrevDescription), colour = CheckInp(Request.Colour,PrevColour), noteid = NoteId, userId = UserId, });
+                return res2;
+            }
+
+
+
+        }
     }
 }

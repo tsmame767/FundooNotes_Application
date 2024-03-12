@@ -24,7 +24,7 @@ namespace FundooNotes.Controllers
         [Authorize] 
         public async Task<IActionResult> Get()
         {
-            var list = await NoteService.GetAll();
+            var list =  await NoteService.GetAll();
             if (list != null)
             {
                 return Ok(list);
@@ -61,33 +61,35 @@ namespace FundooNotes.Controllers
             }
             return response;
         }
-        /*
-        [HttpPost("Update")]
-        public async Task<IActionResult> Update([FromBody] Employee emp, int Id)
+        [HttpPut]
+        public NoteResponse Update(int NoteId, UpdateNoteRequest Request)
         {
-            var _list = await this.service.Update(emp, Id);
-            if (_list != null)
+            NoteResponse response=new NoteResponse();
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sid);
+            int userId = int.Parse(userIdClaim.Value);
+            var res = this.NoteService.UpdateNote(Request,userId,NoteId);
+            if (Convert.ToInt32(res) > 0)
             {
-                return Ok(_list);
+                response.Status = 201;
+                response.Message = "Note Updated Successfully";
+                response.IsSuccess = true;
+
             }
+
             else
             {
-                return NotFound();
+                response.Status = 404;
+                response.Message = "Note Not Update";
+                response.IsSuccess = false;
+
             }
+            return response;
         }
 
-        [HttpPost("Remove")]
-        public async Task<IActionResult> Remove(int Id)
-        {
-            var _list = await this.service.Remove(Id);
-            if (_list != null)
-            {
-                return Ok(_list);
-            }
-            else
-            {
-                return NotFound();
-            }
-        }*/
     }
+
+
+
+        
+    
 }

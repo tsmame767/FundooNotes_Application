@@ -9,7 +9,16 @@ namespace ModelLayer.DTO
 {
     public class CreateNoteRequest
     {
+        [JsonIgnore]
         public int NoteId { get; set; }
+        public string Description { get; set; }
+        public string Title { get; set; }
+        public string Colour { get; set; }
+    }
+
+    public class UpdateNoteRequest
+    {
+        //public int NoteId { get; set; }
         public string Description { get; set; }
         public string Title { get; set; }
         public string Colour { get; set; }
@@ -24,6 +33,7 @@ namespace ModelLayer.DTO
 
     public class NoteInfo
     {
+        
         public int NoteId { get; set; }
         public string Description { get; set; }
         public string Title { get; set; }

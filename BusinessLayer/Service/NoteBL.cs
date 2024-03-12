@@ -28,5 +28,12 @@ namespace BusinessLayer.Service
             return service.CreateNote(Request,UserId);
         }
 
+        public int UpdateNote(UpdateNoteRequest Request, int UserId,int NoteId)
+        {
+            return service.UpdateNote(Request,UserId,NoteId);
+        }
+
+
+
     }
 }

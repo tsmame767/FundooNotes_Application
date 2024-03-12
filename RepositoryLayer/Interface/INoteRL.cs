@@ -14,5 +14,7 @@ namespace RepositoryLayer.Interface
         public Task<List<Note>> GetAll();
 
         public int CreateNote(CreateNoteRequest Request, int UserId);
+
+        public int UpdateNote(UpdateNoteRequest Request, int UserId,int NoteId);
     }
 }
