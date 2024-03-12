@@ -111,7 +111,32 @@ namespace RepositoryLayer.Service
 
         public bool isArchived(int NoteId)
         {
-            return false;
+            var res = -1;
+            var query = "update Notes set isarchived=1 where noteid=@noteid";
+            using (var connect = this.context.CreateConnection())
+            {
+                res=connect.Execute(query, new { noteid = NoteId });
+                if (res <= 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public bool isDeleted(int NoteId)
+        {
+            var res = -1;
+            var query = "update Notes set isdeleted=1 where noteid=@noteid";
+            using (var connect = this.context.CreateConnection())
+            {
+                res = connect.Execute(query, new { noteid = NoteId });
+                if (res <= 0)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

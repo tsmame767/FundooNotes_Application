@@ -43,6 +43,11 @@ namespace BusinessLayer.Service
             return service.isArchived(NoteId);
         }
 
+        public bool isDeleted(int NoteId)
+        {
+            return service.isDeleted(NoteId);
+        }
+
 
 
     }

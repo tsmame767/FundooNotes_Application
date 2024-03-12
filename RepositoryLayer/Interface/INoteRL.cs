@@ -20,5 +20,7 @@ namespace RepositoryLayer.Interface
         public int DeleteNote(int NoteId);
 
         public bool isArchived(int NoteId);
+
+        public bool isDeleted(int NoteId);
     }
 }

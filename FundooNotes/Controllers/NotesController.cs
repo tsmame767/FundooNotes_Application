@@ -20,7 +20,7 @@ namespace FundooNotes.Controllers
         }
 
 
-        [HttpGet("GetAll")]
+        [HttpGet]
         [Authorize] 
         public async Task<IActionResult> Get()
         {
@@ -35,7 +35,7 @@ namespace FundooNotes.Controllers
             }
         }
         
-        [HttpPost("Create")]
+        [HttpPost]
         [Authorize]
         public  NoteResponse Create([FromBody] CreateNoteRequest Request)
         {
@@ -62,6 +62,7 @@ namespace FundooNotes.Controllers
             return response;
         }
         [HttpPut]
+        [Authorize]
         public NoteResponse Update(int NoteId, UpdateNoteRequest Request)
         {
             NoteResponse response=new NoteResponse();
@@ -87,6 +88,7 @@ namespace FundooNotes.Controllers
         }
 
         [HttpDelete]
+        [Authorize]
         public NoteResponse Delete(int NoteId)
         {
             NoteResponse response=new NoteResponse();
@@ -110,20 +112,43 @@ namespace FundooNotes.Controllers
 
         }
 
-        /
+        [HttpPatch("Archive/{NoteId}")]
+        [Authorize]
         public NoteResponse isArchived(int NoteId)
         {
             NoteResponse response=new NoteResponse();
+            response.Status = 204;
+            response.Message = "Note Not Archived";
+            response.IsSuccess = false;
+
             var res = this.NoteService.isArchived(NoteId);
+            if (res == true) 
+            {
+                response.Status = 200;
+                response.Message = "Note Archived";
+                response.IsSuccess = true;
+            }
+
             return response;
         }
 
-        //public NoteResponse isDeleted(int NoteId)
-        //{
-        //    NoteResponse response = new NoteResponse();
-        //    var res = this.NoteService.isDeleted(NoteId);
-        //    return response;
-        //}
+        [HttpPatch("Trash/{NoteId}")]
+        [Authorize]
+        public NoteResponse isDeleted(int NoteId)
+        {
+            NoteResponse response = new NoteResponse();
+            response.Status = 204;
+            response.Message = "Note Not Trashed";
+            response.IsSuccess = false;
+            var res = this.NoteService.isDeleted(NoteId);
+            if (res == true)
+            {
+                response.Status = 200;
+                response.Message = "Note Trashed";
+                response.IsSuccess = true;
+            }
+            return response;
+        }
 
 
     }
