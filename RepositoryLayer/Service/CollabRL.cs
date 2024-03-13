@@ -37,5 +37,16 @@ namespace RepositoryLayer.Service
             }
             return res;
         }
+
+        public int RemoveCollaborator(int NoteId, CollabRequest Request)
+        {
+            var res = 0;
+            var query = "delete from Collaboration where NoteId=@NoteId and collaboratorsEmail=@Email";
+            using (var connect = this._context.CreateConnection())
+            {
+                res = connect.Execute(query, new { NoteId = NoteId, Email = Request.Email });
+            }
+            return res;
+        }
     }
 }

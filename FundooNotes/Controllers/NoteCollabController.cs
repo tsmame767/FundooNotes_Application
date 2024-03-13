@@ -53,7 +53,28 @@ namespace FundooNotes.Controllers
             return response;
         }
 
-        
+        [HttpDelete]
+        public CollabResponse RemoveCollab(int NoteId, CollabRequest Request)
+        {
+            CollabResponse response = new CollabResponse();
+            response.Status = 404;
+            response.Message = "Could Not Delete Collaborator";
+            response.IsSuccess = false;
+
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sid);
+            int userId = int.Parse(userIdClaim.Value);
+            var res = this.CollabService.RemoveCollaborator(NoteId, Request);
+            if (res > 0)
+            {
+                response.IsSuccess = true;
+                response.Message = "Collaborator Deleted";
+                response.Status = 204;
+            }
+
+            return response;
+        }
+
+
 
     }
 }

@@ -27,5 +27,9 @@ namespace BusinessLayer.Service
         {
             return this._context.AddCollaborator(NoteId,Request,UserId);
         }
+        public int RemoveCollaborator(int NoteId, CollabRequest Request)
+        {
+            return this._context.RemoveCollaborator(NoteId,Request);
+        }
     }
 }

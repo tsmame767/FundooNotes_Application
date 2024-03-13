@@ -9,7 +9,7 @@ namespace ModelLayer.DTO
     public class Collabinfo
     {
         public int CollabId {  get; set; }
-        public string Email { get; set; }
+        public string CollaboratorsEmail { get; set; }
         public int NoteId { get; set; }
         public int UserId { get; set; }
 
