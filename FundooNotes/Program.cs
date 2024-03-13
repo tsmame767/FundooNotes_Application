@@ -40,6 +40,8 @@ builder.Services.AddScoped<IStudentBL, StudentBL>();
 builder.Services.AddScoped<IStudentRL,StudentRL>();
 builder.Services.AddScoped<INoteBL, NoteBL>();
 builder.Services.AddScoped<INoteRL, NoteRL>();
+builder.Services.AddScoped<ICollabBL, CollabBL>();
+builder.Services.AddScoped<ICollabRL, CollabRL>();
 
 
 
