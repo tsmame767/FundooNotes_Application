@@ -10,6 +10,8 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.Extensions.Configuration;
+using ModelLayer.DTO;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -42,6 +44,9 @@ builder.Services.AddScoped<INoteBL, NoteBL>();
 builder.Services.AddScoped<INoteRL, NoteRL>();
 builder.Services.AddScoped<ICollabBL, CollabBL>();
 builder.Services.AddScoped<ICollabRL, CollabRL>();
+builder.Services.AddScoped<IEmailServiceBL, EmailServiceBL>();
+builder.Services.AddScoped<IEmailServiceRL, EmailServiceRL>();
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 
 
 

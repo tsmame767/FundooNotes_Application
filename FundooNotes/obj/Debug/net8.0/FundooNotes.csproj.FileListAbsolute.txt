@@ -148,3 +148,6 @@ D:\c#\API2\FundooNotes\obj\Debug\net8.0\refint\FundooNotes.dll
 D:\c#\API2\FundooNotes\obj\Debug\net8.0\FundooNotes.pdb
 D:\c#\API2\FundooNotes\obj\Debug\net8.0\FundooNotes.genruntimeconfig.cache
 D:\c#\API2\FundooNotes\obj\Debug\net8.0\ref\FundooNotes.dll
+D:\c#\API2\FundooNotes\bin\Debug\net8.0\Newtonsoft.Json.dll
+D:\c#\API2\FundooNotes\bin\Debug\net8.0\SendGrid.dll
+D:\c#\API2\FundooNotes\bin\Debug\net8.0\StarkbankEcdsa.dll

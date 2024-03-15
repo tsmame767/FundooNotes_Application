@@ -12,5 +12,6 @@ namespace RepositoryLayer.Interface
         public Task<List<Collabinfo>> GetAll();
         public int AddCollaborator(int NoteId, CollabRequest Request,int UserId);
         public int RemoveCollaborator(int NoteId, CollabRequest Request);
+        
     }
 }
