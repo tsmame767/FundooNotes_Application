@@ -26,21 +26,24 @@ using System.Reflection;
 using RepositoryLayer.JWT;
 using Microsoft.Extensions.Configuration;
 using System.ComponentModel.DataAnnotations;
+using Azure.Core;
+using System.Collections;
+using System.Text.RegularExpressions;
 
 namespace RepositoryLayer.Service
 {
-    public class StudentRL: IStudentRL
+    public class StudentRL : IStudentRL
     {
-        
+
 
         private readonly ContextDataBase _context;
         private readonly IConfiguration _config;
-    
-        public StudentRL(ContextDataBase context,IConfiguration config)
+
+        public StudentRL(ContextDataBase context, IConfiguration config)
         {
             this._context = context;
             this._config = config;
-            
+
 
 
         }
@@ -102,7 +105,7 @@ namespace RepositoryLayer.Service
             {
                 //string response = "Login Failed : No Details Matched";
                 var query = "select * from Student_Details where email=@Email";
-                
+
                 using (var connect = this._context.CreateConnection())
                 {
 
@@ -110,7 +113,7 @@ namespace RepositoryLayer.Service
                     if (user != null && BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
                     {
 
-                        
+
 
 
                         TokenGenerator token = new TokenGenerator(_config);
@@ -122,7 +125,7 @@ namespace RepositoryLayer.Service
                         response.data.Last_Name = user.Last_Name;
                         response.Token = token.generateJwtToken(response.data.Id, response.data.Email);
                         // authentication successful so generate jwt token
-                       
+
                         //response = "Login Successful";
                         //UserResp = new UserLoginResponse()
                         //{
@@ -146,7 +149,7 @@ namespace RepositoryLayer.Service
             }
             catch (Exception ex)
             {
-                response.IsSuccess=false;
+                response.IsSuccess = false;
                 response.Message = ex.Message;
             }
             finally
@@ -176,6 +179,99 @@ namespace RepositoryLayer.Service
             }
         }
 
+        public async Task<PasswordResetModel> ForgotPassword(string email)
+        {
+
+            PasswordResetModel resmodel = new PasswordResetModel();
+            var query = "select * from Student_Details where email=@Email";
+
+            using (var connect = this._context.CreateConnection())
+            {
+
+                var user = await connect.QueryFirstOrDefaultAsync<Users>(query, new { Email = email });
+                if(user == null)
+                {
+                    return null; 
+                }
+
+                TokenGenerator token = new TokenGenerator(_config);
+                
+                
+                var Token = token.generateJwtToken(user.Id, user.Email);
+
+                var callback = $"https://localhost:7086/Api/User/ResetPassword?={Token}";
+
+                resmodel.Email = user.Email;
+                resmodel.CallBack= callback;
+
+                return resmodel;
+
+            }
+
+        }
+
+        public async Task<PasswordResponse> ResetPassword( string email, string NewPass, string Token)
+        {
+            PasswordResponse response = new PasswordResponse()
+            {
+                Status = 404,
+                Message = "New Password Not Updated",
+                IsSuccess = false
+            };
+
+            var UpdatePassQuery = "update Student_Details set password=@password where email=@email";
+            var query = "select * from Student_Details where email=@Email";
+            
+            using (var connect = this._context.CreateConnection())
+            {
+                
+                var user = await connect.QueryFirstOrDefaultAsync<Users>(query, new { Email = email });
+
+                if(user == null && user.Id == null)
+                {
+                    return response;
+                }
+                try
+                {
+                    ExtractToken extractToken = new ExtractToken();
+                    TokenGenerator ResetToken = new TokenGenerator(_config);
+                    int intValue = Convert.ToInt32(user.Id);
+                    string stringValue = Convert.ToString(user.Email);
+                    var CompToken = ResetToken.generateJwtToken(intValue, stringValue);
+                    var CompEmail = extractToken.ExtractEmailFromToken(CompToken);
+                    if (email == CompEmail)
+                    {
+
+
+                        var res = await connect.ExecuteAsync(UpdatePassQuery, new { password = BCrypt.Net.BCrypt.HashPassword(NewPass), email = email });
+                        if (res > 0)
+                        {
+                            response.Status = 201;
+                            response.Message = "New Password Updated";
+                            response.IsSuccess = true;
+                        }
+                        else
+                        {
+                            response.Status = 404;
+                            response.Message = "New Password Not Updated";
+                            response.IsSuccess = true;
+                        }
+                        response.Message = $"Original Token : {Token}\nGenerated Token :{CompToken}";
+
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return response;
+                }
+            }
+            return response;
+                
+
+            
+        }
 
     }
+    
 }

@@ -5,6 +5,9 @@ using RepositoryLayer.Interface;
 using BusinessLayer.Interface;
 using Microsoft.AspNetCore.Identity;
 using System.Reflection.Metadata.Ecma335;
+using RepositoryLayer.Service;
+using System.IdentityModel.Tokens.Jwt;
+using RepositoryLayer.JWT;
 
 
 namespace FundooNotes.Controllers
@@ -15,15 +18,21 @@ namespace FundooNotes.Controllers
     [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
     public class FundooController : ControllerBase
     {
+
+        ExtractToken ExtractToken=new ExtractToken();
         private readonly IStudentBL service;
 
+        //private readonly StudentRL studentRL;
         
         private readonly IEmailServiceBL emailService;
+
+        //private readonly EmailServiceRL emailServiceRL;
 
         public FundooController(IStudentBL _service,IEmailServiceBL _emailService) 
         {
             this.service = _service;
             this.emailService = _emailService;
+            //this.emailServiceRL= emailServiceRL;
         }
 
         [HttpPost("UserRegistration")]
@@ -74,7 +83,8 @@ namespace FundooNotes.Controllers
        
 
         [HttpGet("SendMail")]
-        [Authorize]
+        [AllowAnonymous]
+
         public async Task<IActionResult> GetEmail(string Email)
         {
             
@@ -88,6 +98,42 @@ namespace FundooNotes.Controllers
             }
             
             return StatusCode(500, new { Message = "Failed to send email." });
+        }
+
+        [HttpPost]
+        [Route("forgot-password")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordModel model)
+        {
+            var user = await this.service.ForgotPassword(model.Email);
+            var check = await this.emailService.SendEmailAsync(user.Email, "Password Reset",$"Please Reset your Password {user.CallBack}");
+            if (user == null || check ==0)
+            {
+                return BadRequest();
+            }
+            
+            return Ok(user);
+        }
+
+        [HttpPost]
+        [Route("ResetPassword")]
+        [AllowAnonymous]
+        public async Task<IActionResult> PasswordReset(PasswordReset model)
+        {
+            //var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sid);
+            var userEmail = ExtractToken.ExtractEmailFromToken(model.Token);
+            
+            var res = await this.service.ResetPassword(userEmail, model.NewPassword, model.Token);
+            if (res != null)
+            {
+                return Ok(res);
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+
         }
 
 

@@ -2053,11 +2053,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\c#\\API2\\RepositoryLayer\\RepositoryLayer.csproj",
+      "projectUniqueName": "D:\\c#\\repos\\FundooNotes_Application\\RepositoryLayer\\RepositoryLayer.csproj",
       "projectName": "RepositoryLayer",
-      "projectPath": "D:\\c#\\API2\\RepositoryLayer\\RepositoryLayer.csproj",
+      "projectPath": "D:\\c#\\repos\\FundooNotes_Application\\RepositoryLayer\\RepositoryLayer.csproj",
       "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-      "outputPath": "D:\\c#\\API2\\RepositoryLayer\\obj\\",
+      "outputPath": "D:\\c#\\repos\\FundooNotes_Application\\RepositoryLayer\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -2074,8 +2074,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\c#\\API2\\ModelLayer\\ModelLayer.csproj": {
-              "projectPath": "D:\\c#\\API2\\ModelLayer\\ModelLayer.csproj"
+            "D:\\c#\\repos\\FundooNotes_Application\\ModelLayer\\ModelLayer.csproj": {
+              "projectPath": "D:\\c#\\repos\\FundooNotes_Application\\ModelLayer\\ModelLayer.csproj"
             }
           }
         }

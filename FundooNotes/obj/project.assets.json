@@ -2615,11 +2615,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\c#\\API2\\FundooNotes\\FundooNotes.csproj",
+      "projectUniqueName": "D:\\c#\\repos\\FundooNotes_Application\\FundooNotes\\FundooNotes.csproj",
       "projectName": "FundooNotes",
-      "projectPath": "D:\\c#\\API2\\FundooNotes\\FundooNotes.csproj",
+      "projectPath": "D:\\c#\\repos\\FundooNotes_Application\\FundooNotes\\FundooNotes.csproj",
       "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-      "outputPath": "D:\\c#\\API2\\FundooNotes\\obj\\",
+      "outputPath": "D:\\c#\\repos\\FundooNotes_Application\\FundooNotes\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -2636,11 +2636,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\c#\\API2\\BusinessLayer\\BusinessLayer.csproj": {
-              "projectPath": "D:\\c#\\API2\\BusinessLayer\\BusinessLayer.csproj"
+            "D:\\c#\\repos\\FundooNotes_Application\\BusinessLayer\\BusinessLayer.csproj": {
+              "projectPath": "D:\\c#\\repos\\FundooNotes_Application\\BusinessLayer\\BusinessLayer.csproj"
             },
-            "D:\\c#\\API2\\RepositoryLayer\\RepositoryLayer.csproj": {
-              "projectPath": "D:\\c#\\API2\\RepositoryLayer\\RepositoryLayer.csproj"
+            "D:\\c#\\repos\\FundooNotes_Application\\RepositoryLayer\\RepositoryLayer.csproj": {
+              "projectPath": "D:\\c#\\repos\\FundooNotes_Application\\RepositoryLayer\\RepositoryLayer.csproj"
             }
           }
         }

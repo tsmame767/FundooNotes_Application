@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "0wT/vRwp9BVzapqSvyP8PowsAexlue35xLGdRf9lYjA96+KSBbINcaAe125G4P3uogYysrwiJxYp7+z2dkkd7Q==",
+  "dgSpecHash": "dqCF6svmxaGizEWD02RCJ0K9iwPP6OR3vdEvie+5yFrhhkqKibCV/C2urqcfoS+HBdgr/MUsDLpfHhO+Rzp4DA==",
   "success": true,
-  "projectFilePath": "D:\\c#\\API2\\BusinessLayer\\BusinessLayer.csproj",
+  "projectFilePath": "D:\\c#\\repos\\FundooNotes_Application\\BusinessLayer\\BusinessLayer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\hp\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\hp\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

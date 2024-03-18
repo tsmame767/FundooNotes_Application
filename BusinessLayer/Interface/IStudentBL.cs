@@ -20,6 +20,8 @@ namespace BusinessLayer.Interface
 
         public Task<List<Users>> GetAll();
 
+        public Task<PasswordResetModel> ForgotPassword(string email);
+        public Task<PasswordResponse> ResetPassword(string email,string NewPass,string Token);
         //public AuthenticateResponse UserLogin(AuthenticateRequest model);
     }
 }

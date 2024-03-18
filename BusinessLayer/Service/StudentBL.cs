@@ -37,6 +37,16 @@ namespace BusinessLayer.Service
             return this.studentRL.GetAll();
         }
 
+        public Task<PasswordResetModel> ForgotPassword(string email)
+        {
+            return this.studentRL.ForgotPassword(email);
+        }
+
+        public Task<PasswordResponse> ResetPassword( string email, string NewPass, string Token)
+        {
+            return this.studentRL.ResetPassword(email,NewPass, Token);
+        }
+
 
     }
 }
