@@ -11,9 +11,9 @@ namespace RepositoryLayer.Interface
     public interface INoteRL
     {
 
-        public Task<List<Note>> GetAll();
+        public Task<List<Note>> GetAll(int userId);
 
-        public int CreateNote(CreateNoteRequest Request, int UserId);
+        public Note CreateNote(CreateNoteRequest Request, int UserId);
 
         public int UpdateNote(UpdateNoteRequest Request, int UserId,int NoteId);
 

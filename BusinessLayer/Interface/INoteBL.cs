@@ -10,9 +10,9 @@ namespace BusinessLayer.Interface
 {
     public interface INoteBL
     {
-        public Task<List<Note>> GetAll();
+        public Task<List<Note>> GetAll(int userId);
 
-        public int CreateNote(CreateNoteRequest Request, int UserId);
+        public Note CreateNote(CreateNoteRequest Request, int UserId);
 
         public int UpdateNote(UpdateNoteRequest Request, int UserId,int NoteId);
 

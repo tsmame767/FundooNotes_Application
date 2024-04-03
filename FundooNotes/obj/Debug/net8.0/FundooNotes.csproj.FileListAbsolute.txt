@@ -151,3 +151,5 @@ D:\c#\API2\FundooNotes\obj\Debug\net8.0\ref\FundooNotes.dll
 D:\c#\API2\FundooNotes\bin\Debug\net8.0\Newtonsoft.Json.dll
 D:\c#\API2\FundooNotes\bin\Debug\net8.0\SendGrid.dll
 D:\c#\API2\FundooNotes\bin\Debug\net8.0\StarkbankEcdsa.dll
+D:\c#\API2\FundooNotes\bin\Debug\net8.0\Pipelines.Sockets.Unofficial.dll
+D:\c#\API2\FundooNotes\bin\Debug\net8.0\StackExchange.Redis.dll

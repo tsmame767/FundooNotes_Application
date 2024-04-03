@@ -18,12 +18,12 @@ namespace BusinessLayer.Service
         {
             this.service = _service;
         }
-        public Task<List<Note>> GetAll()
+        public Task<List<Note>> GetAll(int userId)
         {
-            return service.GetAll();
+            return service.GetAll(userId);
         }
         
-        public int CreateNote(CreateNoteRequest Request, int UserId)
+        public Note CreateNote(CreateNoteRequest Request, int UserId)
         {
             return service.CreateNote(Request,UserId);
         }

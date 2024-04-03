@@ -1,8 +1,10 @@
 ﻿using BusinessLayer.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using ModelLayer.DTO;
 using RepositoryLayer.Entity;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace FundooNotes.Controllers
@@ -13,10 +15,12 @@ namespace FundooNotes.Controllers
     public class NotesController : ControllerBase
     {
         private readonly INoteBL NoteService;
+        private readonly ICacheService CacheService;
 
-        public NotesController(INoteBL _Service)
+        public NotesController(INoteBL _Service, ICacheService cacheService)
         {
             this.NoteService = _Service;
+            CacheService = cacheService;
         }
 
 
@@ -24,33 +28,58 @@ namespace FundooNotes.Controllers
         [Authorize] 
         public async Task<IActionResult> Get()
         {
-            var list =  await NoteService.GetAll();
+            // Attempt to find the UserId claim
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sid);
+            int userId = int.Parse(userIdClaim.Value);
+
+            // Redis Cache Check
+            var cacheKey = $"User_{userId}";
+            var cachedData = CacheService.GetData<Note>(cacheKey);
+            if (cachedData != null)
+            {
+                return Ok(cachedData);
+            }
+
+            var list =  await NoteService.GetAll(userId);
             if (list != null)
             {
+                CacheService.SetData(cacheKey, list,DateTimeOffset.Now.AddMinutes(5));
                 return Ok(list);
             }
-            else
-            {
-                return BadRequest();
-            }
+            return NotFound();
         }
         
         [HttpPost]
         [Authorize]
         public  NoteResponse Create([FromBody] CreateNoteRequest Request)
         {
+            
             NoteResponse response = new NoteResponse();
             // Attempt to find the UserId claim
             var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sid);
             int userId = int.Parse(userIdClaim.Value);
-            var _list =  this.NoteService.CreateNote(Request, userId);
-            if (Convert.ToInt32(_list)> 0 )
+            
+            var note =  this.NoteService.CreateNote(Request, userId);
+            var cacheKey = $"Note_{note.NoteId}";
+
+            if (note!=null )
             {
+
+                // Retrieve existing notes from cache or initialize a new list
+                //var notesList = CacheService.GetData<List<NoteInfo>>(cacheKey) ?? new List<NoteInfo>();
+                var notes= CacheService.GetData<List<Note>>(cacheKey) ?? new List<Note>();
+
+
+                notes.Add(note);
+                
+                // Update the cache with the new list of notes
+                CacheService.SetData(cacheKey, notes, DateTimeOffset.Now.AddMinutes(5));
+
                 response.Status = 200;
                 response.Message = "Note Added Successfully";
                 response.IsSuccess = true;
-                
             }
+
             
             else
             {
@@ -68,13 +97,13 @@ namespace FundooNotes.Controllers
             NoteResponse response=new NoteResponse();
             var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sid);
             int userId = int.Parse(userIdClaim.Value);
+            
             var res = this.NoteService.UpdateNote(Request,userId,NoteId);
             if (Convert.ToInt32(res) > 0)
             {
                 response.Status = 201;
                 response.Message = "Note Updated Successfully";
                 response.IsSuccess = true;
-
             }
 
             else

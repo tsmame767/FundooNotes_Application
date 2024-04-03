@@ -13,6 +13,7 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using ModelLayer.DTO;
 using Microsoft.AspNetCore.Identity;
+using StackExchange.Redis;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,6 +40,12 @@ builder.Services.AddControllers();
 
 
 builder.Services.AddSingleton<ContextDataBase>();
+
+// Configure Redis Cache
+var redisConnectionString = builder.Configuration.GetValue<string>("RedisCacheSettings:ConnectionString");
+builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(redisConnectionString));
+
+
 builder.Services.AddScoped<IStudentBL, StudentBL>();
 builder.Services.AddScoped<IStudentRL,StudentRL>();
 builder.Services.AddScoped<INoteBL, NoteBL>();
@@ -47,6 +54,8 @@ builder.Services.AddScoped<ICollabBL, CollabBL>();
 builder.Services.AddScoped<ICollabRL, CollabRL>();
 builder.Services.AddScoped<IEmailServiceBL, EmailServiceBL>();
 builder.Services.AddScoped<IEmailServiceRL, EmailServiceRL>();
+builder.Services.AddScoped<ICacheService, CacheService>();
+builder.Services.AddScoped<ICacheServiceRL, CacheServiceRL>();
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 
 
