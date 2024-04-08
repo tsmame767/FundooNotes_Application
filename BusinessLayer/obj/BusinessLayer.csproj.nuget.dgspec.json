@@ -168,6 +168,10 @@
               "target": "Package",
               "version": "[4.0.3, )"
             },
+            "Confluent.Kafka": {
+              "target": "Package",
+              "version": "[2.3.0, )"
+            },
             "Dapper": {
               "target": "Package",
               "version": "[2.1.28, )"
