@@ -28,24 +28,24 @@ namespace BusinessLayer.Service
             return service.CreateNote(Request,UserId);
         }
 
-        public int UpdateNote(UpdateNoteRequest Request, int UserId,int NoteId)
+        public Task<int> UpdateNote(UpdateNoteRequest Request, int UserId,int NoteId)
         {
             return service.UpdateNote(Request,UserId,NoteId);
         }
 
-        public int DeleteNote(int NoteId)
+        public Task<int> DeleteNote(int NoteId,int UserId)
         {
-            return service.DeleteNote(NoteId);
+            return service.DeleteNote(NoteId,UserId);
         }
 
-        public bool isArchived(int NoteId)
+        public Task<string> isArchived(int NoteId, int UserId)
         {
-            return service.isArchived(NoteId);
+            return service.isArchived(NoteId, UserId);
         }
 
-        public bool isDeleted(int NoteId)
+        public Task<string> isDeleted(int NoteId, int UserId)
         {
-            return service.isDeleted(NoteId);
+            return service.isDeleted(NoteId, UserId);
         }
 
 

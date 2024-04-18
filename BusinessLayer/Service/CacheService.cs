@@ -17,9 +17,9 @@ namespace BusinessLayer.Service
             this.cacheServiceRL = _cacheServiceRL;
         }
 
-        public List<Note> GetData<T>(string key)
+        public List<Note> GetData(string key)
         {
-            return this.cacheServiceRL.GetData<T>(key);
+            return this.cacheServiceRL.GetData(key);
         }
         public bool SetData<T>(string key, T value, DateTimeOffset expirationTime)
         {

@@ -14,12 +14,12 @@ namespace BusinessLayer.Interface
 
         public Note CreateNote(CreateNoteRequest Request, int UserId);
 
-        public int UpdateNote(UpdateNoteRequest Request, int UserId,int NoteId);
+        public Task<int> UpdateNote(UpdateNoteRequest Request, int UserId,int NoteId);
 
-        public int DeleteNote(int NoteId);
+        public Task<int> DeleteNote(int NoteId,int UserId);
 
-        public bool isArchived(int NoteId);
-        public bool isDeleted(int NoteId);
+        public Task<string> isArchived(int NoteId, int UserId);
+        public Task<string> isDeleted(int NoteId, int UserId);
 
     }
 }

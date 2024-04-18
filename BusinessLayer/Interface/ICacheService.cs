@@ -9,7 +9,7 @@ namespace BusinessLayer.Interface
 {
     public interface ICacheService
     {
-        List<Note> GetData<T>(string key);
+        List<Note> GetData(string key);
         bool SetData<T>(string key, T value, DateTimeOffset expirationTime);
         bool RemoveData(string key);
     }
